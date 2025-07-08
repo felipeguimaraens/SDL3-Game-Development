@@ -22,9 +22,4 @@
   <ItemGroup>
     <None Include="C:\vclib\SDL3\lib\x64\SDL3.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SDL_exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>
