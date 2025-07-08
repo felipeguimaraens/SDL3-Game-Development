@@ -9,7 +9,7 @@ private:
 	bool isRunning = false;
 	SDL_Window* gameWindow = 0;
 	SDL_Renderer* gameRenderer = 0;
-	SDL_InitFlags gameInitFlags = SDL_INIT_VIDEO;
+	SDL_InitFlags gameInitFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
 public:
 	Game(){}
 	~Game(){}
@@ -38,9 +38,28 @@ public:
 		SDL_RenderClear(gameRenderer);
 		SDL_RenderPresent(gameRenderer);
 	}
+
 	void update() {}
-	void handleEvents() {}
-	void clean() {}
+	void handleEvents() {
+		SDL_Event event;
+		if (SDL_PollEvent(&event)) {
+			switch (event.type)
+			{
+			case SDL_EVENT_QUIT:
+				isRunning = false;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	
+	void clean() {
+		SDL_DestroyWindow(gameWindow);
+		SDL_DestroyRenderer(gameRenderer);
+		SDL_Quit();
+	}
+
 	bool running() {
 		return isRunning;
 	}
