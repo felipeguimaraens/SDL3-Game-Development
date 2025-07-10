@@ -9,7 +9,10 @@ private:
 	bool isRunning = false;
 	SDL_Window* gameWindow = 0;
 	SDL_Renderer* gameRenderer = 0;
+	SDL_Texture* gameTexture = 0;
 	SDL_InitFlags gameInitFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
+	SDL_FRect sourceRect = {};
+	SDL_FRect targetRect = {};
 public:
 	Game(){}
 	~Game(){}
@@ -30,12 +33,26 @@ public:
 			throw std::runtime_error("Unable to create renderer");
 		}
 
+		// loading texture
+		SDL_Surface* TempSurface = SDL_LoadBMP("assets/rider.bmp");
+		gameTexture = SDL_CreateTextureFromSurface(gameRenderer, TempSurface);
+		SDL_DestroySurface(TempSurface);
+
+		// SDL_QueryTexture was replaced by SDL_GetTextureSize in SDL3
+		SDL_GetTextureSize(gameTexture, &sourceRect.w, &sourceRect.h);
+
+		targetRect.x = sourceRect.x = 0;
+		targetRect.y = sourceRect.y = 0;
+		targetRect.w = sourceRect.w;
+		targetRect.h = sourceRect.h;
+
 		isRunning = true;
 	}
 
 	void render() {
-		SDL_SetRenderDrawColor(gameRenderer, 255, 255, 0, 255);
+		SDL_SetRenderDrawColor(gameRenderer, 6, 0, 12, 255);
 		SDL_RenderClear(gameRenderer);
+		SDL_RenderTexture(gameRenderer, gameTexture, &sourceRect, &targetRect);
 		SDL_RenderPresent(gameRenderer);
 	}
 
