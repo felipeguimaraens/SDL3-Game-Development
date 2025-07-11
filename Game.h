@@ -41,8 +41,10 @@ public:
 		// SDL_QueryTexture was replaced by SDL_GetTextureSize in SDL3
 		SDL_GetTextureSize(gameTexture, &sourceRect.w, &sourceRect.h);
 
-		targetRect.x = sourceRect.x = 0;
-		targetRect.y = sourceRect.y = 0;
+		sourceRect.x = 0;
+		sourceRect.y = 0;
+		targetRect.x = 50;
+		targetRect.y = 50;
 		targetRect.w = sourceRect.w;
 		targetRect.h = sourceRect.h;
 
@@ -52,6 +54,7 @@ public:
 	void render() {
 		SDL_SetRenderDrawColor(gameRenderer, 6, 0, 12, 255);
 		SDL_RenderClear(gameRenderer);
+		//SDL_RenderTexture(gameRenderer, gameTexture, NULL, NULL); - to full screen
 		SDL_RenderTexture(gameRenderer, gameTexture, &sourceRect, &targetRect);
 		SDL_RenderPresent(gameRenderer);
 	}
