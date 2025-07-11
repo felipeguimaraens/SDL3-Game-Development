@@ -58,12 +58,14 @@ public:
 	void render() {
 		SDL_SetRenderDrawColor(gameRenderer, 12, 12, 0, 255);
 		SDL_RenderClear(gameRenderer);
-		//SDL_RenderTexture(gameRenderer, gameTexture, NULL, NULL); - to full screen
-		SDL_RenderTexture(gameRenderer, gameTexture, &sourceRect, &targetRect);
+		//SDL_RenderCopyEx() doesn't exist in SDL3
+		SDL_RenderTextureRotated(gameRenderer, gameTexture, &sourceRect, &targetRect, 0.0, NULL, SDL_FLIP_HORIZONTAL);
 		SDL_RenderPresent(gameRenderer);
 	}
 
-	void update() {}
+	void update() {
+		sourceRect.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+	}
 	void handleEvents() {
 		SDL_Event event;
 		if (SDL_PollEvent(&event)) {
