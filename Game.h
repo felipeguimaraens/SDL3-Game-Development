@@ -34,17 +34,21 @@ public:
 		}
 
 		// loading texture
-		SDL_Surface* TempSurface = SDL_LoadBMP("assets/rider.bmp");
+		SDL_Surface* TempSurface = SDL_LoadBMP("assets/animate.bmp");
 		gameTexture = SDL_CreateTextureFromSurface(gameRenderer, TempSurface);
 		SDL_DestroySurface(TempSurface);
 
 		// SDL_QueryTexture was replaced by SDL_GetTextureSize in SDL3
-		SDL_GetTextureSize(gameTexture, &sourceRect.w, &sourceRect.h);
+		// SDL_GetTextureSize(gameTexture, &sourceRect.w, &sourceRect.h); - Not necessary
+		// if you are using custom width and height
 
 		sourceRect.x = 0;
 		sourceRect.y = 0;
-		targetRect.x = 50;
-		targetRect.y = 50;
+		targetRect.x = 0;
+		targetRect.y = 0;
+
+		sourceRect.w = 128;
+		sourceRect.h = 82;
 		targetRect.w = sourceRect.w;
 		targetRect.h = sourceRect.h;
 
@@ -52,7 +56,7 @@ public:
 	}
 
 	void render() {
-		SDL_SetRenderDrawColor(gameRenderer, 6, 0, 12, 255);
+		SDL_SetRenderDrawColor(gameRenderer, 12, 12, 0, 255);
 		SDL_RenderClear(gameRenderer);
 		//SDL_RenderTexture(gameRenderer, gameTexture, NULL, NULL); - to full screen
 		SDL_RenderTexture(gameRenderer, gameTexture, &sourceRect, &targetRect);
