@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 #include <stdexcept>
 
 
@@ -34,7 +35,7 @@ public:
 		}
 
 		// loading texture
-		SDL_Surface* TempSurface = SDL_LoadBMP("assets/animate.bmp");
+		SDL_Surface* TempSurface = IMG_Load("assets/animate.png");
 		gameTexture = SDL_CreateTextureFromSurface(gameRenderer, TempSurface);
 		SDL_DestroySurface(TempSurface);
 
