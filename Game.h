@@ -35,7 +35,7 @@ public:
 		}
 
 		// loading texture
-		SDL_Surface* TempSurface = IMG_Load("assets/animate.png");
+		SDL_Surface* TempSurface = IMG_Load("assets/animate-alpha.png");
 		gameTexture = SDL_CreateTextureFromSurface(gameRenderer, TempSurface);
 		SDL_DestroySurface(TempSurface);
 
@@ -57,7 +57,7 @@ public:
 	}
 
 	void render() {
-		SDL_SetRenderDrawColor(gameRenderer, 12, 12, 0, 255);
+		SDL_SetRenderDrawColor(gameRenderer, 124, 0, 124, 255);
 		SDL_RenderClear(gameRenderer);
 		//SDL_RenderCopyEx() doesn't exist in SDL3
 		SDL_RenderTextureRotated(gameRenderer, gameTexture, &sourceRect, &targetRect, 0.0, NULL, SDL_FLIP_HORIZONTAL);
