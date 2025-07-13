@@ -16,7 +16,7 @@ private:
 	SDL_FRect sourceRect = {};
 	SDL_FRect targetRect = {};
 	int currentFrame = 0;
-	TextureManager textureManager;
+
 public:
 	Game() {}
 	~Game() {}
@@ -38,17 +38,19 @@ public:
 		}
 
 		// loading texture
-		textureManager.load("assets/animate-alpha.png", "animate", gameRenderer);
+		if (!TheTextureManager::Instance()->load("assets/animate-alpha.png", "animate", gameRenderer)) {
+			throw std::runtime_error("Singleton: TheTextureManager won't load");
+		}
 
 		isRunning = true;
 	}
 
 	void render() {
-		SDL_SetRenderDrawColor(gameRenderer, 124, 0, 124, 255);
+		SDL_SetRenderDrawColor(gameRenderer, 0, 0, 124, 255);
 		SDL_RenderClear(gameRenderer);
-		textureManager.draw("animate", 0, 0, 128, 82, gameRenderer);
-		textureManager.drawFrame("animate", 300, 300, 128, 82, 1, currentFrame, gameRenderer);
-		SDL_RenderTextureRotated(gameRenderer, gameTexture, &sourceRect, &targetRect, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+		TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82, gameRenderer);
+		TheTextureManager::Instance()->drawFrame("animate", 300, 300, 128, 82, 1, currentFrame, gameRenderer, SDL_FLIP_HORIZONTAL);
+		//SDL_RenderTextureRotated(gameRenderer, gameTexture, &sourceRect, &targetRect, 0.0, NULL, SDL_FLIP_HORIZONTAL);
 		SDL_RenderPresent(gameRenderer);
 	}
 
