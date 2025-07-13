@@ -3,6 +3,7 @@
 #include <SDL3/SDL.h>
 #include "Game.cpp"
 
+
 // Always initialize pointers
 Game* game = 0;
 

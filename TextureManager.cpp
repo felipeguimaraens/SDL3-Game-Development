@@ -23,10 +23,32 @@ bool TextureManager::load(std::string fileName, std::string id, SDL_Renderer* te
 
 void TextureManager::draw(std::string id, int x_pos, int y_pos, int width, int height, SDL_Renderer* textureRenderer, SDL_FlipMode flip)
 {
+	SDL_FRect sourceRect = {};
+	SDL_FRect targetRect = {};
 
+	sourceRect.x = 0;
+	sourceRect.y = 0;
+	sourceRect.w = targetRect.w = width;
+	sourceRect.h = targetRect.h = height;
+	
+	targetRect.x = x_pos;
+	targetRect.y = y_pos;
+
+	SDL_RenderTextureRotated(textureRenderer, textureMap[id], &sourceRect, &targetRect, 0.0, NULL, flip);
 };
 
 void TextureManager::drawFrame(std::string id, int x_pos, int y_pos, int width, int height, int currentRow, int currentFrame, SDL_Renderer* textureRenderer, SDL_FlipMode flip)
 {
+	SDL_FRect sourceRect = {};
+	SDL_FRect targetRect = {};
 
+	sourceRect.x = width * currentFrame;
+	sourceRect.y = height * (currentRow - 1);
+	sourceRect.w = targetRect.w = width;
+	sourceRect.h = targetRect.h = height;
+
+	targetRect.x = x_pos;
+	targetRect.y = y_pos;
+
+	SDL_RenderTextureRotated(textureRenderer, textureMap[id], &sourceRect, &targetRect, 0.0, NULL, flip);
 }

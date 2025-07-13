@@ -2,6 +2,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <stdexcept>
+#include "TextureManager.h"
+
 
 class Game
 {
@@ -13,6 +15,8 @@ private:
 	SDL_InitFlags gameInitFlags = SDL_INIT_VIDEO | SDL_INIT_EVENTS;
 	SDL_FRect sourceRect = {};
 	SDL_FRect targetRect = {};
+	int currentFrame = 0;
+	TextureManager textureManager;
 public:
 	Game() {}
 	~Game() {}
@@ -34,23 +38,7 @@ public:
 		}
 
 		// loading texture
-		SDL_Surface* TempSurface = IMG_Load("assets/animate-alpha.png");
-		gameTexture = SDL_CreateTextureFromSurface(gameRenderer, TempSurface);
-		SDL_DestroySurface(TempSurface);
-
-		// SDL_QueryTexture was replaced by SDL_GetTextureSize in SDL3
-		// SDL_GetTextureSize(gameTexture, &sourceRect.w, &sourceRect.h); - Not necessary
-		// if you are using custom width and height
-
-		sourceRect.x = 0;
-		sourceRect.y = 0;
-		targetRect.x = 0;
-		targetRect.y = 0;
-
-		sourceRect.w = 128;
-		sourceRect.h = 82;
-		targetRect.w = sourceRect.w;
-		targetRect.h = sourceRect.h;
+		textureManager.load("assets/animate-alpha.png", "animate", gameRenderer);
 
 		isRunning = true;
 	}
@@ -58,13 +46,14 @@ public:
 	void render() {
 		SDL_SetRenderDrawColor(gameRenderer, 124, 0, 124, 255);
 		SDL_RenderClear(gameRenderer);
-		//SDL_RenderCopyEx() doesn't exist in SDL3
+		textureManager.draw("animate", 0, 0, 128, 82, gameRenderer);
+		textureManager.drawFrame("animate", 300, 300, 128, 82, 1, currentFrame, gameRenderer);
 		SDL_RenderTextureRotated(gameRenderer, gameTexture, &sourceRect, &targetRect, 0.0, NULL, SDL_FLIP_HORIZONTAL);
 		SDL_RenderPresent(gameRenderer);
 	}
 
 	void update() {
-		sourceRect.x = 128 * int(((SDL_GetTicks() / 100) % 6));
+		currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	}
 	void handleEvents() {
 		SDL_Event event;
