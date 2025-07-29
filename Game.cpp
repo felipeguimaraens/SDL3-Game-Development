@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 #include <stdexcept>
+#include <vector>
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Player.h"
@@ -17,9 +18,9 @@ private:
 	SDL_FRect sourceRect = {};
 	SDL_FRect targetRect = {};
 	int currentFrame = 0;
-	GameObject go;
-	Player player;
-
+	GameObject* go;
+	Player* player;
+	std::vector<GameObject*> gameObjects;
 public:
 	Game() {}
 	~Game() {}
@@ -47,24 +48,41 @@ public:
 
 		isRunning = true;
 
-		go.load(100, 100, 128, 82, "animate");
-		player.load(300, 300, 128, 82, "animate");
+		go = new GameObject();
+		player = new Player();
+
+		go->load(100, 100, 128, 82, "animate");
+		player->load(300, 300, 128, 82, "animate");
+
+		gameObjects.push_back(go);
+		gameObjects.push_back(player);
 	}
 
 	void render() {
 		SDL_SetRenderDrawColor(gameRenderer, 0, 50, 0, 255);
 		SDL_RenderClear(gameRenderer);
 
-		go.draw(gameRenderer);
-		player.draw(gameRenderer);
+		for (std::vector <GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+		{
+			gameObjects[i]->draw(gameRenderer);
+		}
 
 		SDL_RenderPresent(gameRenderer);
 	}
 
+	void draw() { 
+		for (std::vector <GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+		{
+			gameObjects[i]->draw(gameRenderer);
+		}
+	}
+
 	void update() {
 		currentFrame = int(((SDL_GetTicks() / 100) % 6));
-		go.update();
-		player.update();
+		for (std::vector <GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
+		{
+			gameObjects[i]->update();
+		}
 	}
 	void handleEvents() {
 		SDL_Event event;
