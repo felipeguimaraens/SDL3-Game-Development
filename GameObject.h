@@ -1,20 +1,24 @@
 #pragma once
 #include <iostream>
+#include <SDL3/SDL.h>
 
 class GameObject
 {
 public:
-	void draw() {
-		std::cout << "Object: Draw!" << "\n";
-	}
-	void update() {
-		std::cout << "Object: Update!" << "\n";
-	}
-	void clean() {
-		std::cout << "Object: Clean!" << "\n";
-	}
+	void load(int x, int y, int w, int h, std::string textureID);
+	void draw(SDL_Renderer* Renderer);
+	void update();
+	void clean();
 protected:
-	int x_pos = 0;
-	int y_pos = 0;
+	std::string textureID;
+
+	int currentFrame;
+	int currentRow;
+
+	int x_pos;
+	int y_pos;
+
+	int h;
+	int w;
 };
 
