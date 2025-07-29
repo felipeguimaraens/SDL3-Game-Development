@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "TextureManager.h"
+#include <iostream>
 
 void Player::load(int x, int y, int width, int height, std::string textureID)
 {
@@ -15,4 +16,9 @@ void Player::draw(SDL_Renderer* textureRenderer)
 void Player::update()
 {
 	x_pos -= 1;
+}
+
+void Player::clean()
+{
+	GameObject::clean();
 }

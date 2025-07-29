@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "TextureManager.h"
+#include <iostream>
 
 void GameObject::load(int x, int y, int width, int height, std::string texture) 
 {
@@ -22,4 +23,9 @@ void GameObject::draw(SDL_Renderer* textureRenderer)
 void GameObject::update()
 {
 	x_pos += 1;
+}
+
+void GameObject::clean()
+{
+	std::cout << "Object destroyed.\n";
 }

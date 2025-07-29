@@ -6,6 +6,7 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class Game
 {
@@ -19,7 +20,8 @@ private:
 	SDL_FRect targetRect = {};
 	int currentFrame = 0;
 	GameObject* go;
-	Player* player;
+	GameObject* player;
+	GameObject* enemy;
 	std::vector<GameObject*> gameObjects;
 public:
 	Game() {}
@@ -50,12 +52,15 @@ public:
 
 		go = new GameObject();
 		player = new Player();
+		enemy = new Enemy();
 
 		go->load(100, 100, 128, 82, "animate");
 		player->load(300, 300, 128, 82, "animate");
+		enemy->load(0, 0, 128, 82, "animate");
 
 		gameObjects.push_back(go);
 		gameObjects.push_back(player);
+		gameObjects.push_back(enemy);
 	}
 
 	void render() {
