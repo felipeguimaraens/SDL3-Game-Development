@@ -3,7 +3,8 @@
 #include <SDL3_image/SDL_image.h>
 #include <stdexcept>
 #include "TextureManager.h"
-
+#include "GameObject.h"
+#include "Player.h"
 
 class Game
 {
@@ -16,6 +17,8 @@ private:
 	SDL_FRect sourceRect = {};
 	SDL_FRect targetRect = {};
 	int currentFrame = 0;
+	GameObject go;
+	Player player;
 
 public:
 	Game() {}
@@ -43,19 +46,25 @@ public:
 		}
 
 		isRunning = true;
+
+		go.load(100, 100, 128, 82, "animate");
+		player.load(300, 300, 128, 82, "animate");
 	}
 
 	void render() {
-		SDL_SetRenderDrawColor(gameRenderer, 0, 0, 124, 255);
+		SDL_SetRenderDrawColor(gameRenderer, 0, 50, 0, 255);
 		SDL_RenderClear(gameRenderer);
-		TheTextureManager::Instance()->draw("animate", 0, 0, 128, 82, gameRenderer);
-		TheTextureManager::Instance()->drawFrame("animate", 300, 300, 128, 82, 1, currentFrame, gameRenderer, SDL_FLIP_HORIZONTAL);
-		//SDL_RenderTextureRotated(gameRenderer, gameTexture, &sourceRect, &targetRect, 0.0, NULL, SDL_FLIP_HORIZONTAL);
+
+		go.draw(gameRenderer);
+		player.draw(gameRenderer);
+
 		SDL_RenderPresent(gameRenderer);
 	}
 
 	void update() {
 		currentFrame = int(((SDL_GetTicks() / 100) % 6));
+		go.update();
+		player.update();
 	}
 	void handleEvents() {
 		SDL_Event event;

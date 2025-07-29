@@ -19,6 +19,7 @@ int main() {
 			game->render();
 			game->update();
 			game->handleEvents();
+			SDL_Delay(10);// cap framerate
 		}
 		
 		game->clean();
