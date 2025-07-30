@@ -1,7 +1,7 @@
 #include "SDLGameObject.h"
 #include "LoaderParams.h"
 #include "TextureManager.h"
-#include "Game.cpp"
+#include "Game.h"
 
 SDLGameObject::SDLGameObject(const LoaderParams* Parameters) : GameObject(Parameters) {
 	x_pos = Parameters->getX();
@@ -16,4 +16,12 @@ SDLGameObject::SDLGameObject(const LoaderParams* Parameters) : GameObject(Parame
 
 void SDLGameObject::draw() {
 	TextureManager::Instance()->drawFrame(textureID, x_pos, y_pos, width, height, currentRow, currentFrame, TheGame::Instance()->getRenderer());
+}
+
+void SDLGameObject::update() {
+
+}
+
+void SDLGameObject::clean() {
+
 }

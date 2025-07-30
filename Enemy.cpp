@@ -1,14 +1,13 @@
+#pragma once
 #include "Enemy.h"
-#include "TextureManager.h"
 
-void Enemy::load(int x, int y, int width, int height, std::string textureID)
-{
-	GameObject::load(x, y, width, height, textureID);
+Enemy::Enemy(const LoaderParams* Parameters) : SDLGameObject(Parameters) {
+
 }
 
-void Enemy::draw(SDL_Renderer* textureRenderer)
+void Enemy::draw()
 {
-	TextureManager::Instance()->drawFrame(textureID, x_pos, y_pos, w, h, currentRow, currentFrame, textureRenderer);
+	SDLGameObject::draw();
 }
 
 void Enemy::update()
@@ -21,5 +20,5 @@ void Enemy::update()
 
 void Enemy::clean()
 {
-	GameObject::clean();
+
 }

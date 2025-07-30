@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <SDL3/SDL.h>
+#include "LoaderParams.h"
 
 class GameObject
 {

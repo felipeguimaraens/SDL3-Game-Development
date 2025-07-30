@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <SDL3/SDL.h>
-#include "Game.cpp"
+#include "Game.h"
 
 Game* game = 0;
 
