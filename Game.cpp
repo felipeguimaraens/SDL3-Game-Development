@@ -23,10 +23,19 @@ private:
 	GameObject* player;
 	GameObject* enemy;
 	std::vector<GameObject*> gameObjects;
+	Game();
+	static Game* instance;
 public:
-	Game() {}
+	static Game* Instance() {
+		if (instance == 0) {
+			instance = new Game();
+		}
+		return instance;
+	}
 	~Game() {}
 	void init(const char* title, int height, int width, int window_flags) {
+		Game* instance = 0;
+
 		if (!SDL_Init(gameInitFlags)) {
 			throw std::runtime_error("Unable to create window");
 		}
@@ -75,6 +84,10 @@ public:
 		SDL_RenderPresent(gameRenderer);
 	}
 
+	SDL_Renderer* getRenderer() const {
+		return gameRenderer;
+	}
+
 	void draw() { 
 		for (std::vector <GameObject*>::size_type i = 0; i != gameObjects.size(); i++)
 		{
@@ -113,4 +126,6 @@ public:
 		return isRunning;
 	}
 };
+
+typedef Game TheGame;
 
