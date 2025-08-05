@@ -12,6 +12,8 @@ public:
 	float length();
 	Vector2D operator+(const Vector2D& v2);
 	Vector2D& operator+=(const Vector2D& v2);
+	Vector2D operator*(float scalar);
+	Vector2D& operator*=(float scalar);
 private:
 	float x_pos;
 	float y_pos;

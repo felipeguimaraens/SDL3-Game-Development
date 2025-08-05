@@ -26,3 +26,13 @@ Vector2D& Vector2D::operator+=(const Vector2D& v2) {
 	y_pos += v2.y_pos;
 	return *this;
 }
+
+Vector2D Vector2D::operator*(float scalar) {
+	return Vector2D(x_pos * scalar, y_pos * scalar);
+}
+
+Vector2D& Vector2D::operator*=(float scalar) {
+	x_pos *= scalar;
+	y_pos *= scalar;
+	return *this;
+}
