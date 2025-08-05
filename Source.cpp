@@ -7,7 +7,6 @@ Game* game = 0;
 
 int main() {
 	try {
-		
 		TheGame::Instance()->init("SDL:Game Singleton", 800, 600, 0);
 
 		// Game loop

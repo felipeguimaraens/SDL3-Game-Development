@@ -16,3 +16,13 @@ void Vector2D::setY(float y) {
 float Vector2D::length() {
 	return sqrt(x_pos * x_pos + y_pos * y_pos);
 }
+
+Vector2D Vector2D::operator+(const Vector2D& v2) {
+	return Vector2D(x_pos + v2.x_pos, y_pos + v2.y_pos);
+}
+
+Vector2D& Vector2D::operator+=(const Vector2D& v2) {
+	x_pos += v2.x_pos;
+	y_pos += v2.y_pos;
+	return *this;
+}

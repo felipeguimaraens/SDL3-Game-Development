@@ -10,6 +10,8 @@ public:
 	void setX(float x);
 	void setY(float y);
 	float length();
+	Vector2D operator+(const Vector2D& v2);
+	Vector2D& operator+=(const Vector2D& v2);
 private:
 	float x_pos;
 	float y_pos;
