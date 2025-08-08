@@ -8,21 +8,17 @@
 Game* game = 0;
 
 int main() {
-	/* Testing Vectors with print... yay
-	Vector2D vec_01 = Vector2D(5, 10);
+	//Testing Vectors with print... yay
+	/*Vector2D vec_01 = Vector2D(5, 10);
 	Vector2D vec_02 = Vector2D(1, 2);
 	std::cout << vec_01.getX() << "|" << vec_01.getY() << " " << &vec_01 << "\n";
 	std::cout << vec_02.getX() << "|" << vec_02.getY() << " " << &vec_02 << "\n";
-	vec_02 = vec_02 * 2;
-	std::cout << vec_02.getX() << "|" << vec_02.getY() << " " << &vec_02 << "\n";
-	vec_02 *= 2;
-	std::cout << vec_02.getX() << "|" << vec_02.getY() << " " << &vec_02 << "\n";
-	Vector2D vec_03 = vec_01 + vec_02;
+	Vector2D vec_03 = vec_01 - vec_02;
 	std::cout << vec_03.getX() << "|" << vec_03.getY() << " " << &vec_03 << "\n";
-	vec_01 += vec_02;
-	std::cout << vec_01.getX() << "|" << vec_01.getY() << " " << &vec_01 << "\n";*/
+	vec_02 -= vec_01;
+	std::cout << vec_02.getX() << "|" << vec_02.getY() << " " << &vec_02 << "\n";
+	return 0;*/
 
-	return 0;
 	try {
 		TheGame::Instance()->init("SDL:Game Singleton", 800, 600, 0);
 
