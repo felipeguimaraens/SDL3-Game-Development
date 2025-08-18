@@ -15,6 +15,7 @@ protected:
 	/*int x_pos;
 	int y_pos; replaced by vector*/
 	Vector2D position;
+	Vector2D velocity;
 
 	int width;
 	int height;
