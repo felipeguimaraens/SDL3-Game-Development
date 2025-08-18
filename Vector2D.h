@@ -10,6 +10,7 @@ public:
 	void setX(float x);
 	void setY(float y);
 	float length();
+	void normalize();
 	Vector2D operator+(const Vector2D& v2);
 	Vector2D& operator+=(const Vector2D& v2);
 	Vector2D operator-(const Vector2D& v2);

@@ -56,3 +56,10 @@ Vector2D& Vector2D::operator/=(float scalar) {
 	y_pos /= scalar;
 	return *this;
 }
+
+void Vector2D::normalize() {
+	float l = this->length();
+	if (l > 0) {
+		(*this) *= 1 / l;
+	}
+}
