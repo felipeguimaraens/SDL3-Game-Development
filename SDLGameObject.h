@@ -2,6 +2,7 @@
 #include <string>
 #include "LoaderParams.h"
 #include "GameObject.h"
+#include "Vector2D.h"
 
 class SDLGameObject : public GameObject
 {
@@ -11,8 +12,9 @@ public:
 	virtual void update();
 	virtual void clean();
 protected:
-	int x_pos;
-	int y_pos;
+	/*int x_pos;
+	int y_pos; replaced by vector*/
+	Vector2D position;
 
 	int width;
 	int height;

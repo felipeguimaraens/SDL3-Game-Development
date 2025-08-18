@@ -12,7 +12,7 @@ void Player::draw()
 
 void Player::update()
 {
-	x_pos -= 1;
+	position.setX(position.getX() - 1);
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 }
 
