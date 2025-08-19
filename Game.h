@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "LoaderParams.h"
+#include "InputHandler.h"
 
 class Game
 {

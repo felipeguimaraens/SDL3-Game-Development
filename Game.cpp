@@ -25,6 +25,8 @@ void Game::init(const char* title, int height, int width, int window_flags) {
 		throw std::runtime_error("Singleton: TheTextureManager won't load");
 	}
 
+	TheInputHandler::Instance()->initialiseJoysticks();
+
 	isRunning = true;
 
 	gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
@@ -62,20 +64,11 @@ void Game::update() {
 	}
 }
 void Game::handleEvents() {
-	SDL_Event event;
-	if (SDL_PollEvent(&event)) {
-		switch (event.type)
-		{
-		case SDL_EVENT_QUIT:
-			isRunning = false;
-			break;
-		default:
-			break;
-		}
-	}
+	TheInputHandler::Instance()->update();
 }
 
 void Game::clean() {
+	TheInputHandler::Instance()->clean();
 	SDL_DestroyWindow(gameWindow);
 	SDL_DestroyRenderer(gameRenderer);
 	SDL_Quit();
