@@ -11,6 +11,7 @@ public:
 	void update();
 	void clean();
 	void initialiseJoysticks();
+	bool getButtonState(int joy, int buttonNumber);
 	int xvalue(int joy, int stick);
 	int yvalue(int joy, int stick);
 	static InputHandler* instance;
@@ -22,12 +23,13 @@ public:
 	}
 	~InputHandler() {}
 	const int joystickDeadZone = 0;
+	std::vector<std::vector<bool>> buttonStates;
 private:
 	InputHandler() {};
-	int joystick_count;
+	int joystick_count=0;
 	std::vector <SDL_Joystick*> joysticks;
 	std::vector<std::pair<Vector2D*, Vector2D*>> joystickValues;
-	bool JoysticksInitialised;
+	bool JoysticksInitialised=0;
 } ;
 typedef InputHandler TheInputHandler;
 
