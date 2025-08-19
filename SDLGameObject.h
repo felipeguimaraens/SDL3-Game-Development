@@ -16,6 +16,7 @@ protected:
 	int y_pos; replaced by vector*/
 	Vector2D position;
 	Vector2D velocity;
+	Vector2D acceleration;
 
 	int width;
 	int height;
