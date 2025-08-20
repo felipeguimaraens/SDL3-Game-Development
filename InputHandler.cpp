@@ -93,9 +93,21 @@ bool InputHandler::getButtonState(int joy, int buttonNumber)
 
 void InputHandler::update ()
 {
+	mousePosition = new Vector2D(0, 0);
+
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
+
+		// Mouse events
+
+		if (event.type == SDL_EVENT_MOUSE_MOTION)
+		{
+			mousePosition->setX(event.motion.x);
+			mousePosition->setY(event.motion.y);
+			std::cout << "Mouse position: " << mousePosition->getX() << " | " << mousePosition->getY() << "\n";
+		}
+
 		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
 		{
 			if (event.button.button == SDL_BUTTON_LEFT)
@@ -134,10 +146,7 @@ void InputHandler::update ()
 			std::cout << "Mouse: press up - " << (int)event.button.button << "\n";
 		}
 
-		if (event.type == SDL_EVENT_QUIT)
-		{
-			TheGame::Instance()->clean();
-		}
+		// Joystick events
 
 		if (event.type == SDL_EVENT_JOYSTICK_AXIS_MOTION)
 		{
@@ -224,12 +233,24 @@ void InputHandler::update ()
 			//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
 			buttonStates[0][static_cast<int>(event.jbutton.button)] = true;;
 		}
+
+		// General events
+
+		if (event.type == SDL_EVENT_QUIT)
+		{
+			TheGame::Instance()->clean();
+		}
 	}
 }
 
 bool InputHandler::getMouseButtonState(int buttonNumber)
 {
 	return mouseButtonStates[buttonNumber];
+}
+
+Vector2D* InputHandler::getMousePosition()
+{
+	return mousePosition;
 }
 
 void InputHandler::clean()

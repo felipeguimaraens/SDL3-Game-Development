@@ -33,7 +33,9 @@ public:
 	std::vector<std::vector<bool>> buttonStates;
 	std::vector<bool> mouseButtonStates;
 	bool getMouseButtonState(int buttonNumber);
+	Vector2D* getMousePosition();
 private:
+	Vector2D* mousePosition;
 	InputHandler();
 	int joystick_count=0;
 	std::vector <SDL_Joystick*> joysticks;
