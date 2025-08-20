@@ -105,7 +105,6 @@ void InputHandler::update ()
 		{
 			mousePosition->setX(event.motion.x);
 			mousePosition->setY(event.motion.y);
-			std::cout << "Mouse position: " << mousePosition->getX() << " | " << mousePosition->getY() << "\n";
 		}
 
 		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
@@ -124,7 +123,6 @@ void InputHandler::update ()
 			{
 				mouseButtonStates[RIGHT] = true;
 			}
-			std::cout << "Mouse: press down - " << (int)event.button.button << "\n";
 		}
 
 		if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
@@ -143,7 +141,6 @@ void InputHandler::update ()
 			{
 				mouseButtonStates[RIGHT] = false;
 			}
-			std::cout << "Mouse: press up - " << (int)event.button.button << "\n";
 		}
 
 		// Joystick events
