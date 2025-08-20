@@ -1,6 +1,8 @@
 #pragma once
 #include "Player.h"
 
+Vector2D* vec = new Vector2D(0,0);
+
 Player::Player(const LoaderParams* Parameters) : SDLGameObject(Parameters) {
 
 }
@@ -12,9 +14,12 @@ void Player::draw()
 
 void Player::update()
 {
+	vec = TheInputHandler::Instance()->getMousePosition();
 	velocity.setX(0);
 	velocity.setY(0);
 	handleInput();
+
+	velocity = (*vec - position) / 100;
 
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	SDLGameObject::update();

@@ -93,7 +93,7 @@ bool InputHandler::getButtonState(int joy, int buttonNumber)
 
 void InputHandler::update ()
 {
-	mousePosition = new Vector2D(0, 0);
+	
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event))

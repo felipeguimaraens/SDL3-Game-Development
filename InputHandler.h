@@ -35,7 +35,7 @@ public:
 	bool getMouseButtonState(int buttonNumber);
 	Vector2D* getMousePosition();
 private:
-	Vector2D* mousePosition;
+	Vector2D* mousePosition = new Vector2D(0, 0);
 	InputHandler();
 	int joystick_count=0;
 	std::vector <SDL_Joystick*> joysticks;
