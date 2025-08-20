@@ -5,6 +5,13 @@
 #include "Vector2D.h"
 #include "Game.h"
 
+enum mouse_buttons
+{
+	LEFT  = 0,
+	MIDDLE = 1,
+	RIGHT = 2
+};
+
 class InputHandler
 {
 public:
@@ -24,8 +31,10 @@ public:
 	~InputHandler() {}
 	const int joystickDeadZone = 0;
 	std::vector<std::vector<bool>> buttonStates;
+	std::vector<bool> mouseButtonStates;
+	bool getMouseButtonState(int buttonNumber);
 private:
-	InputHandler() {};
+	InputHandler();
 	int joystick_count=0;
 	std::vector <SDL_Joystick*> joysticks;
 	std::vector<std::pair<Vector2D*, Vector2D*>> joystickValues;

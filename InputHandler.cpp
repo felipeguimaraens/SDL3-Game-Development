@@ -2,6 +2,13 @@
 
 InputHandler* InputHandler::instance = 0;
 
+InputHandler::InputHandler() {
+	//Initialize mouse
+	for (int i = 0; i < 3; i++) {
+		mouseButtonStates.push_back(false);
+	}
+}
+
 void InputHandler::initialiseJoysticks()
 {
 	if (SDL_WasInit(SDL_INIT_JOYSTICK) == 0)
@@ -89,6 +96,44 @@ void InputHandler::update ()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
+		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
+		{
+			if (event.button.button == SDL_BUTTON_LEFT)
+			{
+				mouseButtonStates[LEFT] = true;
+			}
+
+			if (event.button.button == SDL_BUTTON_MIDDLE)
+			{
+				mouseButtonStates[MIDDLE] = true;
+			}
+
+			if (event.button.button == SDL_BUTTON_RIGHT)
+			{
+				mouseButtonStates[RIGHT] = true;
+			}
+			std::cout << "Mouse: press down - " << (int)event.button.button << "\n";
+		}
+
+		if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
+		{
+			if (event.button.button == SDL_BUTTON_LEFT)
+			{
+				mouseButtonStates[LEFT] = false;
+			}
+
+			if (event.button.button == SDL_BUTTON_MIDDLE)
+			{
+				mouseButtonStates[MIDDLE] = false;
+			}
+
+			if (event.button.button == SDL_BUTTON_RIGHT)
+			{
+				mouseButtonStates[RIGHT] = false;
+			}
+			std::cout << "Mouse: press up - " << (int)event.button.button << "\n";
+		}
+
 		if (event.type == SDL_EVENT_QUIT)
 		{
 			TheGame::Instance()->clean();
@@ -180,6 +225,11 @@ void InputHandler::update ()
 			buttonStates[0][static_cast<int>(event.jbutton.button)] = true;;
 		}
 	}
+}
+
+bool InputHandler::getMouseButtonState(int buttonNumber)
+{
+	return mouseButtonStates[buttonNumber];
 }
 
 void InputHandler::clean()

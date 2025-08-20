@@ -42,10 +42,6 @@ void Player::handleInput()
 		velocity.setY(1 * TheInputHandler::Instance()->yvalue(0, 2));
 	}
 
-	if (TheInputHandler::Instance()->getButtonState(0, 3))
-	{
-		velocity.setX(1);
-	}
 }
 
 void Player::clean()
