@@ -40,7 +40,6 @@ void InputHandler::initialiseJoysticks()
 				std::cout << "Joystick " << i << " has "
 					<< buttonStates[i].size() << " buttons\n";
 			}
-			std::cout << TheInputHandler::Instance()->getButtonState(0, 3) << "\n";
 		}
 		else {
 			InputHandler::JoysticksInitialised = false;
@@ -99,74 +98,67 @@ void InputHandler::update ()
 		{
 
 			int whichOne = event.jaxis.which;
-			std::cout << "Event captured!" << "\n";
 			if (event.jaxis.axis == 0)
 			{
-				std::cout << event.jaxis.axis << "\n";
 				if (event.jaxis.value > joystickDeadZone)
 				{
-					std::cout << event.jaxis.value << "\n";
-					std::cout << "jaxis.value: " << event.jaxis.value << "\n";
-					joystickValues[whichOne].first->setX(1);
+					joystickValues[0].first->setX(1);
 				}
 				else if (event.jaxis.value < joystickDeadZone)
 				{
-					joystickValues[whichOne].first->setX(-1);
+					joystickValues[0].first->setX(-1);
 				}
 				else
 				{
-					joystickValues[whichOne].first->setX(0);
+					joystickValues[0].first->setX(0);
 				}
 			}
 
 			if (event.jaxis.axis == 1)
 			{
-				std::cout << event.jaxis.axis << "\n";
 				if (event.jaxis.value > joystickDeadZone)
 				{
-					joystickValues[whichOne].first->setY(1);
+					joystickValues[0].first->setY(1);
 				}
 				else if (event.jaxis.value < joystickDeadZone)
 				{
-					joystickValues[whichOne].first->setY(-1);
+					joystickValues[0].first->setY(-1);
 				}
 				else
 				{
-					joystickValues[whichOne].first->setY(0);
+					joystickValues[0].first->setY(0);
 				}
 			}
 
 			if (event.jaxis.axis == 3)
 			{
-				std::cout << event.jaxis.axis << "\n";
 				if (event.jaxis.value > joystickDeadZone)
 				{
-					joystickValues[whichOne].second->setX(1);
+					joystickValues[0].second->setX(1);
 				}
 				else if (event.jaxis.value < joystickDeadZone)
 				{
-					joystickValues[whichOne].second->setX(-1);
+					joystickValues[0].second->setX(-1);
 				}
 				else
 				{
-					joystickValues[whichOne].second->setX(0);
+					joystickValues[0].second->setX(0);
 				}
 			}
 
 			if (event.jaxis.axis == 4)
 			{
-				std::cout << event.jaxis.axis << "\n";
 				if (event.jaxis.value > joystickDeadZone)
 				{
-					joystickValues[whichOne].second->setY(1);
+					joystickValues[0].second->setY(1);
 				}
 				else if (event.jaxis.value < joystickDeadZone)
 				{
-					joystickValues[whichOne].second->setY(-1);
+					joystickValues[0].second->setY(-1);
 				}
 				else
 				{
-					joystickValues[whichOne].second->setY(0);
+					joystickValues[0].second->setY(0);
 				}
 			}
 
@@ -174,17 +166,18 @@ void InputHandler::update ()
 	
 		if (event.type == SDL_EVENT_JOYSTICK_BUTTON_DOWN)
 		{
-			const SDL_JoystickID which = event.jbutton.which;
-			std::cout << which << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
-			buttonStates[which - 1][static_cast<int>(event.jbutton.button)] = true; // For some reason the which is returning 1 for first controller.
+			// For some reason the which is returning 1 or 4 for first controller.
 			// Causing chaos. Also static_cast<int>() because my joystick was returning emojis for event.jbutton.button
+			//const SDL_JoystickID which = event.jbutton.which;
+
+			//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
+			buttonStates[0][static_cast<int>(event.jbutton.button)] = true; 
 		}
 
 		if (event.type == SDL_EVENT_JOYSTICK_BUTTON_UP)
 		{
-			const SDL_JoystickID which = event.jbutton.which;
-			std::cout << which << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
-			buttonStates[which - 1][static_cast<int>(event.jbutton.button)] = true;;
+			//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
+			buttonStates[0][static_cast<int>(event.jbutton.button)] = true;;
 		}
 	}
 }
