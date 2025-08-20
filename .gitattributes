@@ -1,2 +1,4 @@
 *.h linguist-language=C++
+include/ linguist-vendored
+include/* linguist-vendored
 include/** linguist-vendored
