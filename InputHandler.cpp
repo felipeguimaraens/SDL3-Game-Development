@@ -91,9 +91,26 @@ bool InputHandler::getButtonState(int joy, int buttonNumber)
 	return buttonStates[joy][buttonNumber];
 }
 
+bool InputHandler::isKeyDown(SDL_Scancode key)
+{
+	if (keystates != 0)
+	{
+		if (keystates[key] == 1)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	return false;
+}
+
 void InputHandler::update ()
 {
-	
+	SDL_GetKeyboardState(numkeys);
+	keystates = SDL_GetKeyboardState(0);
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event))

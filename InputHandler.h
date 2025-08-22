@@ -33,7 +33,10 @@ public:
 	std::vector<std::vector<bool>> buttonStates;
 	std::vector<bool> mouseButtonStates;
 	bool getMouseButtonState(int buttonNumber);
+	bool isKeyDown(SDL_Scancode key);
 	Vector2D* getMousePosition();
+	const bool* keystates;
+	int* numkeys;
 private:
 	Vector2D* mousePosition = new Vector2D(0, 0);
 	InputHandler();

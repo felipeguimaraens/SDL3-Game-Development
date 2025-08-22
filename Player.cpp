@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include <iostream>
 
 Vector2D* vec = new Vector2D(0,0);
 
@@ -14,12 +15,8 @@ void Player::draw()
 
 void Player::update()
 {
-	vec = TheInputHandler::Instance()->getMousePosition();
-	velocity.setX(0);
-	velocity.setY(0);
-	handleInput();
 
-	velocity = (*vec - position) / 100;
+	handleInput();
 
 	currentFrame = int(((SDL_GetTicks() / 100) % 6));
 	SDLGameObject::update();
@@ -27,6 +24,28 @@ void Player::update()
 
 void Player::handleInput()
 {
+	// Keyboard
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP))
+	{
+		velocity.setY(-1);
+	}
+
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN))
+	{
+		velocity.setY(1);
+	}
+	
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) 
+	{
+		velocity.setX(1);
+	}
+
+	if (InputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT))
+	{
+		velocity.setX(-1);
+	}
+
+	// Joystick
 	if (TheInputHandler::Instance()->xvalue(0, 1) > 0 || TheInputHandler::Instance()->xvalue(0, 1) < 0)
 	{
 		velocity.setX(1 * TheInputHandler::Instance()->xvalue(0, 1));
