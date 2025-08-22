@@ -110,150 +110,91 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
 void InputHandler::update ()
 {
 	SDL_GetKeyboardState(numkeys);
-	keystates = SDL_GetKeyboardState(0);
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
 
-		// Mouse events
-
-		if (event.type == SDL_EVENT_MOUSE_MOTION)
+		switch (event.type)
 		{
-			mousePosition->setX(event.motion.x);
-			mousePosition->setY(event.motion.y);
-		}
-
-		if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
-		{
-			if (event.button.button == SDL_BUTTON_LEFT)
-			{
-				mouseButtonStates[LEFT] = true;
-			}
-
-			if (event.button.button == SDL_BUTTON_MIDDLE)
-			{
-				mouseButtonStates[MIDDLE] = true;
-			}
-
-			if (event.button.button == SDL_BUTTON_RIGHT)
-			{
-				mouseButtonStates[RIGHT] = true;
-			}
-		}
-
-		if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
-		{
-			if (event.button.button == SDL_BUTTON_LEFT)
-			{
-				mouseButtonStates[LEFT] = false;
-			}
-
-			if (event.button.button == SDL_BUTTON_MIDDLE)
-			{
-				mouseButtonStates[MIDDLE] = false;
-			}
-
-			if (event.button.button == SDL_BUTTON_RIGHT)
-			{
-				mouseButtonStates[RIGHT] = false;
-			}
-		}
-
-		// Joystick events
-
-		if (event.type == SDL_EVENT_JOYSTICK_AXIS_MOTION)
-		{
-
-			int whichOne = event.jaxis.which;
-			if (event.jaxis.axis == 0)
-			{
-				if (event.jaxis.value > joystickDeadZone)
-				{
-					joystickValues[0].first->setX(1);
-				}
-				else if (event.jaxis.value < joystickDeadZone)
-				{
-					joystickValues[0].first->setX(-1);
-				}
-				else
-				{
-					joystickValues[0].first->setX(0);
-				}
-			}
-
-			if (event.jaxis.axis == 1)
-			{
-				if (event.jaxis.value > joystickDeadZone)
-				{
-					joystickValues[0].first->setY(1);
-				}
-				else if (event.jaxis.value < joystickDeadZone)
-				{
-					joystickValues[0].first->setY(-1);
-				}
-				else
-				{
-					joystickValues[0].first->setY(0);
-				}
-			}
-
-			if (event.jaxis.axis == 3)
-			{
-				if (event.jaxis.value > joystickDeadZone)
-				{
-					joystickValues[0].second->setX(1);
-				}
-				else if (event.jaxis.value < joystickDeadZone)
-				{
-					joystickValues[0].second->setX(-1);
-				}
-				else
-				{
-					joystickValues[0].second->setX(0);
-				}
-			}
-
-			if (event.jaxis.axis == 4)
-			{
-				if (event.jaxis.value > joystickDeadZone)
-				{
-					joystickValues[0].second->setY(1);
-				}
-				else if (event.jaxis.value < joystickDeadZone)
-				{
-					joystickValues[0].second->setY(-1);
-				}
-				else
-				{
-					joystickValues[0].second->setY(0);
-				}
-			}
-
-		}
-	
-		if (event.type == SDL_EVENT_JOYSTICK_BUTTON_DOWN)
-		{
-			// For some reason the which is returning 1 or 4 for first controller.
-			// Causing chaos. Also static_cast<int>() because my joystick was returning emojis for event.jbutton.button
-			//const SDL_JoystickID which = event.jbutton.which;
-
-			//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
-			buttonStates[0][static_cast<int>(event.jbutton.button)] = true; 
-		}
-
-		if (event.type == SDL_EVENT_JOYSTICK_BUTTON_UP)
-		{
-			//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
-			buttonStates[0][static_cast<int>(event.jbutton.button)] = true;;
-		}
-
-		// General events
-
-		if (event.type == SDL_EVENT_QUIT)
-		{
+		case SDL_EVENT_QUIT:
 			TheGame::Instance()->clean();
+			break;
+		case SDL_EVENT_JOYSTICK_AXIS_MOTION:
+			onJoystickAxisMove(event);
+			break;
+		case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
+			onJoystickAxisMove(event);
+			break;
+		case SDL_EVENT_JOYSTICK_BUTTON_UP:
+			onJoystickAxisMove(event);
+			break;
+		case SDL_EVENT_MOUSE_MOTION:
+			onMouseMove(event);
+			break;
+		case SDL_EVENT_MOUSE_BUTTON_DOWN:
+			onMouseButtonDown(event);
+			break;
+		case SDL_EVENT_MOUSE_BUTTON_UP:
+			onMouseButtonUp(event);
+			break;
+		case SDL_EVENT_KEY_UP:
+			onKeyUp();
+			break;
+		default:
+			break;
 		}
+	}
+}
+
+void InputHandler::onKeyDown()
+{
+	keystates = SDL_GetKeyboardState(0);
+}
+
+void InputHandler::onKeyUp()
+{
+	keystates = SDL_GetKeyboardState(0);
+}
+
+void InputHandler::onMouseMove(SDL_Event& event)
+{
+
+}
+
+void InputHandler::onMouseButtonDown(SDL_Event& event)
+{
+	if (event.button.button == SDL_BUTTON_LEFT)
+	{
+		mouseButtonStates[LEFT] = true;
+	}
+
+	if (event.button.button == SDL_BUTTON_MIDDLE)
+	{
+		mouseButtonStates[MIDDLE] = true;
+	}
+
+	if (event.button.button == SDL_BUTTON_RIGHT)
+	{
+		mouseButtonStates[RIGHT] = true;
+	}
+}
+
+void InputHandler::onMouseButtonUp(SDL_Event& event)
+{
+	if (event.button.button == SDL_BUTTON_LEFT)
+	{
+		mouseButtonStates[LEFT] = false;
+	}
+
+	if (event.button.button == SDL_BUTTON_MIDDLE)
+	{
+		mouseButtonStates[MIDDLE] = false;
+	}
+
+	if (event.button.button == SDL_BUTTON_RIGHT)
+	{
+		mouseButtonStates[RIGHT] = false;
 	}
 }
 
@@ -265,6 +206,89 @@ bool InputHandler::getMouseButtonState(int buttonNumber)
 Vector2D* InputHandler::getMousePosition()
 {
 	return mousePosition;
+}
+
+void InputHandler::onJoystickAxisMove(SDL_Event& event)
+{
+	int whichOne = event.jaxis.which;
+	if (event.jaxis.axis == 0)
+	{
+		if (event.jaxis.value > joystickDeadZone)
+		{
+			joystickValues[0].first->setX(1);
+		}
+		else if (event.jaxis.value < joystickDeadZone)
+		{
+			joystickValues[0].first->setX(-1);
+		}
+		else
+		{
+			joystickValues[0].first->setX(0);
+		}
+	}
+
+	if (event.jaxis.axis == 1)
+	{
+		if (event.jaxis.value > joystickDeadZone)
+		{
+			joystickValues[0].first->setY(1);
+		}
+		else if (event.jaxis.value < joystickDeadZone)
+		{
+			joystickValues[0].first->setY(-1);
+		}
+		else
+		{
+			joystickValues[0].first->setY(0);
+		}
+	}
+
+	if (event.jaxis.axis == 3)
+	{
+		if (event.jaxis.value > joystickDeadZone)
+		{
+			joystickValues[0].second->setX(1);
+		}
+		else if (event.jaxis.value < joystickDeadZone)
+		{
+			joystickValues[0].second->setX(-1);
+		}
+		else
+		{
+			joystickValues[0].second->setX(0);
+		}
+	}
+
+	if (event.jaxis.axis == 4)
+	{
+		if (event.jaxis.value > joystickDeadZone)
+		{
+			joystickValues[0].second->setY(1);
+		}
+		else if (event.jaxis.value < joystickDeadZone)
+		{
+			joystickValues[0].second->setY(-1);
+		}
+		else
+		{
+			joystickValues[0].second->setY(0);
+		}
+	}
+}
+
+void InputHandler::onJoystickButtonDown(SDL_Event& event)
+{
+	// For some reason the which is returning 1 or 4 for first controller.
+	// Causing chaos. Also static_cast<int>() because my joystick was returning emojis for event.jbutton.button
+	//const SDL_JoystickID which = event.jbutton.which;
+	//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
+	buttonStates[0][static_cast<int>(event.jbutton.button)] = true;
+}
+
+void InputHandler::onJoystickButtonUp(SDL_Event& event)
+{
+	//std::cout << whichOne << " | " << static_cast<int>(event.jbutton.button) << " | " << static_cast<int>(event.jbutton.down) << "\n";
+	buttonStates[0][static_cast<int>(event.jbutton.button)] = false;
 }
 
 void InputHandler::clean()

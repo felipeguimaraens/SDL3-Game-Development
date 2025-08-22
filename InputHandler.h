@@ -44,6 +44,21 @@ private:
 	std::vector <SDL_Joystick*> joysticks;
 	std::vector<std::pair<Vector2D*, Vector2D*>> joystickValues;
 	bool JoysticksInitialised=0;
+
+	// keyboard
+	void onKeyDown();
+	void onKeyUp();
+	
+	// mouse
+	void onMouseMove(SDL_Event& event);
+	void onMouseButtonDown(SDL_Event& event);
+	void onMouseButtonUp(SDL_Event& event);
+
+	// Joystick
+	void onJoystickAxisMove(SDL_Event& event);
+	void onJoystickButtonDown(SDL_Event& event);
+	void onJoystickButtonUp(SDL_Event& event);
+
 } ;
 typedef InputHandler TheInputHandler;
 
